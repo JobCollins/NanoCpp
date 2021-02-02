@@ -7,6 +7,25 @@
 
 using namespace std;
 
+enum State {kEmpty, kObstacle} state;
+
+void CellString(State state){
+    switch (state)
+    {
+    case kEmpty:
+        /* code */
+        cout<<"0 ";
+        break;
+    case kObstacle:
+        /* code */
+        cout<<"⛰️ ";
+        break;
+    default:
+        break;
+    }
+}
+
+
 void PrintBoard(vector<vector<int>> vec){
     for (auto i = 0; i < vec.size(); i++)
     {
@@ -15,7 +34,22 @@ void PrintBoard(vector<vector<int>> vec){
         {
             /* code */
 
-            cout<<vec[i][j]<<' ';
+            // cout<<vec[i][j]<<' ';
+            if (vec[i][j]==0)
+            {
+                /* code */
+                CellString(kEmpty);
+            }
+            else if(vec[i][j]==1)
+            {
+                /* code */
+                CellString(kObstacle);
+            }
+            else
+            {
+                break;
+            }
+            
         }
         cout<<endl;
         
