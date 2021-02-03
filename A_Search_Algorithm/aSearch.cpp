@@ -83,6 +83,9 @@ string CellString(State state){
 }
 
 void PrintBoard(vector<vector<State>> board){
+
+    ofstream aSearchFile;
+    aSearchFile.open("output.txt");
     for (auto i = 0; i < board.size(); i++)
     {
         /* code */
@@ -91,12 +94,14 @@ void PrintBoard(vector<vector<State>> board){
             /* code */
 
             cout<<CellString(board[i][j]);
+            aSearchFile<<CellString(board[i][j]);
            
             
         }
         cout<<endl;
-        
+        aSearchFile<<endl;
     }
+    aSearchFile.close();
     
 }
 
