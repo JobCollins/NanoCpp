@@ -48,4 +48,14 @@ void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& openodes, vector
 
 }
 
+//Compare the f values of two nodes
+bool Compare(vector<int> node1, vector<int> node2){
+    //f=g1+h1
+    int f1 = node1[2]+node1[3];
+    //f=g2+h2
+    int f2 = node2[2]+node2[3];
+
+    return f1 > f2;
+}
+
 #endif
