@@ -10,11 +10,21 @@ using namespace std;
 
 vector<vector<State>> Search(vector<vector<int>> grid, int start[2], int goal[2]){
     
-    vector<vector<State>> board;
+    vector<vector<State>> open{};
+
+    //initialize the starting node
+    int x = start[0];
+    int y = start[1];
+    int g = 0;
+    int h = heuristic(x, goal[0], y, goal[1]);
+
+    //Add first node to open vector using the AddToOpen function by passing 
+    //the node values: x, y, g, and h, along with the open and grid vectors.
+    AddToOpen(x, y, g, h, open, grid);
     
     cout<<"No path found!";
 
-    return board;
+    return open;
 }
 
 //taken from ../gridVector.cpp
