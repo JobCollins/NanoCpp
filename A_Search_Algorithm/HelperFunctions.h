@@ -69,13 +69,40 @@ bool CheckValidCell(int x, int y, vector<vector<State>> &grid){
     bool on_grid_y = (y >= 0 && y < grid[0].size());
 
     //if the above values are true (located in the grid)
-    //check whether this location is empty or occupied
+    //check whether this location is empty or occupiedd 
     if(on_grid_x && on_grid_y){
         return grid[x][y] == State::kEmpty;
     }
     else{
         return false;
     }
+}
+
+void ExpandNeighbors(const vector<int> &current_node, int goal[2], vector<vector<int>> &open, vector<vector<State>> &grid){
+    //Get current node's data
+    int x = current_node[0];
+    int y = current_node[1];
+    int g = current_node[2];
+    int h = current_node[3];
+
+    //directional deltas
+    const int delta[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+
+    //loop through current node's potential neighbors
+    for (int i = 0; i < 4; i++)
+    {
+        /* code */
+        int x2 = x + delta[i][0];
+        int y2 = y + delta[i][1];
+
+        //increment g value, compute h value, and add neighbor to open list
+        if(CheckValidCell(x2, y2, grid)){
+            int g2 = g + 1;
+            int h2 = heuristic(x2, y2, goal[0], goal[1]);
+            AddToOpen(x2, y2, g2, h2, open, grid);
+        }
+    }
+    
 }
 
 #endif
