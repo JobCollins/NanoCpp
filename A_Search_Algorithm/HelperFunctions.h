@@ -6,6 +6,7 @@
 #include<sstream>
 #include<fstream>
 #include<cmath>
+#include<algorithm>
 
 
 using namespace std;
@@ -35,10 +36,10 @@ int heuristic(int x1, int x2, int y1, int y2)
 }
 
 
-enum State {kEmpty, kObstacle, kClosed} state;
+enum State {kEmpty, kObstacle, kClosed, kPath} state;
 
 
-void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& openodes, vector<vector<State>>& grid){
+void AddToOpen(int x, int y, int g, int h, vector<vector<int>> &openodes, vector<vector<State>> &grid){
     //create a node vector
     vector<int> node{x, y, g, h};
     //push the above node to the back of the open vector
@@ -49,13 +50,17 @@ void AddToOpen(int x, int y, int g, int h, vector<vector<int>>& openodes, vector
 }
 
 //Compare the f values of two nodes
-bool Compare(vector<int> node1, vector<int> node2){
+bool Compare(const vector<int> node1, const vector<int> node2){
     //f=g1+h1
     int f1 = node1[2]+node1[3];
     //f=g2+h2
     int f2 = node2[2]+node2[3];
 
     return f1 > f2;
+}
+
+void CellSort(vector<vector<int>>*v){
+    sort(v->begin(), v->end(), Compare);
 }
 
 #endif

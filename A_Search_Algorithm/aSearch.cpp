@@ -8,9 +8,9 @@
 using namespace std;
 
 
-vector<vector<State>> Search(vector<vector<int>> grid, int start[2], int goal[2]){
+vector<vector<State>> Search(vector<vector<State>> grid, int start[2], int goal[2]){
     
-    vector<vector<State>> open{};
+    vector<vector<int>> open {};
 
     //initialize the starting node
     int x = start[0];
@@ -24,7 +24,33 @@ vector<vector<State>> Search(vector<vector<int>> grid, int start[2], int goal[2]
     
     cout<<"No path found!";
 
-    return open;
+    while (!open.empty())
+    {
+        /* code */
+        //sort the open list using CellSort
+        CellSort(&open);
+        //get the current node
+        vector<int> current_node = open[0];
+
+        // Get the x and y values from the current node,
+        // and set grid[x][y] to kPath.
+        grid[current_node[0]][current_node[1]] = State::kPath;
+
+        // Check if goal is reached. If so, return grid.
+        // If we're not done, expand search to current node's neighbors.
+        // ExpandNeighbors. This step will be completed later.
+        if((current_node[0] == goal[0]) && (current_node[1] == goal[1])){
+            return grid;
+        }
+        else{
+            //ExpandNeighbors();
+        }
+
+
+    }
+    
+
+    return vector<vector<State>>{};
 }
 
 //taken from ../gridVector.cpp
