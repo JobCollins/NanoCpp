@@ -22,7 +22,8 @@ vector<vector<State>> Search(vector<vector<State>> grid, int start[2], int goal[
     //the node values: x, y, g, and h, along with the open and grid vectors.
     AddToOpen(x, y, g, h, open, grid);
     
-    cout<<"No path found!";
+    // cout<<"No path found!";
+    int i = 0;
 
     while (!open.empty())
     {
@@ -30,7 +31,9 @@ vector<vector<State>> Search(vector<vector<State>> grid, int start[2], int goal[
         //sort the open list using CellSort
         CellSort(&open);
         //get the current node
-        vector<int> current_node = open[0];
+        auto current_node = open.back();
+        open.pop_back();
+        i++;
 
         // Get the x and y values from the current node,
         // and set grid[x][y] to kPath.
@@ -40,10 +43,13 @@ vector<vector<State>> Search(vector<vector<State>> grid, int start[2], int goal[
         // If we're not done, expand search to current node's neighbors.
         // ExpandNeighbors. This step will be completed later.
         if((current_node[0] == goal[0]) && (current_node[1] == goal[1])){
+            //set grid cell to kStart for initial coords and kFinish for the goal coords
+            grid[start[0]][start[1]] = State::kStart;
+            grid[goal[0]][goal[1]] = State::kFinish;
             return grid;
         }
         else{
-            //ExpandNeighbors();
+            ExpandNeighbors(current_node, goal, open, grid);
         }
 
 
@@ -56,45 +62,36 @@ vector<vector<State>> Search(vector<vector<State>> grid, int start[2], int goal[
 //taken from ../gridVector.cpp
 // enum State {kEmpty, kObstacle} state;
 
-void CellString(State state){
+string CellString(State state){
     switch (state)
     {
-    case kEmpty:
+    case State::kStart:
         /* code */
-        cout<<"0 ";
-        break;
-    case kObstacle:
+        return "🚦 ";
+    case State::kObstacle:
         /* code */
-        cout<<"⛰️ ";
-        break;
+        return "⛰️ ";
+    case State::kPath:
+        /* code */
+        return "🚗   ";
+    case State::kFinish:
+        /* code */
+        return "🏁 ";
     default:
-        break;
+        return "0  ";
     }
 }
 
-void PrintBoard(vector<vector<int>> vec){
-    for (auto i = 0; i < vec.size(); i++)
+void PrintBoard(vector<vector<State>> board){
+    for (auto i = 0; i < board.size(); i++)
     {
         /* code */
-        for (auto j = 0; j < vec[i].size(); j++)
+        for (auto j = 0; j < board[i].size(); j++)
         {
             /* code */
 
-            // cout<<vec[i][j]<<' ';
-            if (vec[i][j]==0)
-            {
-                /* code */
-                CellString(kEmpty);
-            }
-            else if(vec[i][j]==1)
-            {
-                /* code */
-                CellString(kObstacle);
-            }
-            else
-            {
-                break;
-            }
+            cout<<CellString(board[i][j]);
+           
             
         }
         cout<<endl;
@@ -105,11 +102,13 @@ void PrintBoard(vector<vector<int>> vec){
 
 int main()
 {   
-    int start[2] = {0,0};
-    int goal[2] = {4,5};
+    int start[2] {0,0};
+    int goal[2] {4,5};
 
 
-    int solution = Search(board, start, goal);
+    auto board = ReadBoardFile("1.board");
+
+    auto solution = Search(board, start, goal);
 
     PrintBoard(solution);
 

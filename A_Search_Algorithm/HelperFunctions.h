@@ -11,43 +11,38 @@
 
 using namespace std;
 
-int heuristic(int x1, int x2, int y1, int y2)
-{   
-    //initialize the manhattan distance variable
-    int distance;
+enum State {kStart, kEmpty, kObstacle, kClosed, kPath, kFinish} state;
 
-    int x_diff = x2 - x1;
-    int y_diff = y2 - y1;
+//directional deltas
+const int delta[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
 
-    if(x_diff < 0){
-        x_diff = -x_diff;
+vector<State> ParseLine(string line) {
+    istringstream sline(line);
+    int n;
+    char c;
+    vector<State> row;
+    while (sline >> n >> c && c == ',') {
+      if (n == 0) {
+        row.push_back(State::kEmpty);
+      } else {
+        row.push_back(State::kObstacle);
+      }
     }
-
-    if(y_diff < 0){
-        y_diff = -y_diff;
+    return row;
+}
+vector<vector<State>> ReadBoardFile(string path) {
+  ifstream myfile (path);
+  vector<vector<State>> board{};
+  if (myfile) {
+    string line;
+    while (getline(myfile, line)) {
+      vector<State> row = ParseLine(line);
+      board.push_back(row);
     }
-
-    //calculate manhattan distance
-    distance = x_diff + y_diff;
-    cout<<"\n Manhattan distance between the points ("<<x1<<','<<y1<<") and ("<<x2<<','<<y2<<") is: "<<distance<<endl;
-
-    return distance;
-
+  }
+  return board;
 }
 
-
-enum State {kEmpty, kObstacle, kClosed, kPath} state;
-
-
-void AddToOpen(int x, int y, int g, int h, vector<vector<int>> &openodes, vector<vector<State>> &grid){
-    //create a node vector
-    vector<int> node{x, y, g, h};
-    //push the above node to the back of the open vector
-    openodes.push_back(node);
-    //set the grid value for the x,y coordinates to the enum value kClosed
-    grid[x][y]=State::kClosed;
-
-}
 
 //Compare the f values of two nodes
 bool Compare(const vector<int> node1, const vector<int> node2){
@@ -62,6 +57,12 @@ bool Compare(const vector<int> node1, const vector<int> node2){
 void CellSort(vector<vector<int>>*v){
     sort(v->begin(), v->end(), Compare);
 }
+
+int heuristic(int x1, int x2, int y1, int y2)
+{   
+    return abs(x2 - x1) + abs(y2 - y1);
+}
+
 
 bool CheckValidCell(int x, int y, vector<vector<State>> &grid){
     //check if cell is located in the grid
@@ -78,15 +79,23 @@ bool CheckValidCell(int x, int y, vector<vector<State>> &grid){
     }
 }
 
+void AddToOpen(int x, int y, int g, int h, vector<vector<int>> &openodes, vector<vector<State>> &grid){
+    //create a node vector
+    vector<int> node{x, y, g, h};
+    //push the above node to the back of the open vector
+    openodes.push_back(node);
+    //set the grid value for the x,y coordinates to the enum value kClosed
+    grid[x][y]=State::kClosed;
+
+}
+
+
 void ExpandNeighbors(const vector<int> &current_node, int goal[2], vector<vector<int>> &open, vector<vector<State>> &grid){
     //Get current node's data
     int x = current_node[0];
     int y = current_node[1];
     int g = current_node[2];
     int h = current_node[3];
-
-    //directional deltas
-    const int delta[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
 
     //loop through current node's potential neighbors
     for (int i = 0; i < 4; i++)
