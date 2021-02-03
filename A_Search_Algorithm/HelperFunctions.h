@@ -63,4 +63,19 @@ void CellSort(vector<vector<int>>*v){
     sort(v->begin(), v->end(), Compare);
 }
 
+bool CheckValidCell(int x, int y, vector<vector<State>> &grid){
+    //check if cell is located in the grid
+    bool on_grid_x = (x >= 0 && x < grid.size());
+    bool on_grid_y = (y >= 0 && y < grid[0].size());
+
+    //if the above values are true (located in the grid)
+    //check whether this location is empty or occupied
+    if(on_grid_x && on_grid_y){
+        return grid[x][y] == State::kEmpty;
+    }
+    else{
+        return false;
+    }
+}
+
 #endif
