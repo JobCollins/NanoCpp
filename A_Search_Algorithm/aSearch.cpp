@@ -2,6 +2,7 @@
 #include<vector>
 #include<sstream>
 #include<fstream>
+#include"HelperFunctions.h"
 
 
 using namespace std;
@@ -17,7 +18,7 @@ vector<vector<State>> Search(vector<vector<int>> grid, int start[2], int goal[2]
 }
 
 //taken from ../gridVector.cpp
-enum State {kEmpty, kObstacle} state;
+// enum State {kEmpty, kObstacle} state;
 
 void CellString(State state){
     switch (state)
