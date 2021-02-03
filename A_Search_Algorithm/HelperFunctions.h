@@ -107,7 +107,7 @@ void ExpandNeighbors(const vector<int> &current_node, int goal[2], vector<vector
         //increment g value, compute h value, and add neighbor to open list
         if(CheckValidCell(x2, y2, grid)){
             int g2 = g + 1;
-            int h2 = heuristic(x2, y2, goal[0], goal[1]);
+            int h2 = heuristic(x2, goal[0], y2, goal[1]); //this is what was causing the bug: heuristic(x2, y2, goal[0], goal[1])
             AddToOpen(x2, y2, g2, h2, open, grid);
         }
     }
