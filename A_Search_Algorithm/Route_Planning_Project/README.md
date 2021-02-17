@@ -1,34 +1,17 @@
 # Route Planning Project
 
-This repo contains the starter code for the Route Planning project.
-
-<img src="map.png" width="600" height="450" />
+This is a Route Planning project for Udacity C++ Nanodegree. This Route Planner uses A* algorithm to find the shortest path. It uses OpenStreet Map data for and io2d rendering library to display the route on a map. Instructions for each exercise can be found in the `instructions` directory, and unit tests for some exercises in the `test` directory.
 
 ## Cloning
 
 When cloning this project, be sure to use the `--recurse-submodules` flag. Using HTTPS:
 ```
-git clone https://github.com/udacity/CppND-Route-Planning-Project.git --recurse-submodules
+git clone https://github.com/arjun7965/Route-Planner.git --recurse-submodules
 ```
 or with SSH:
 ```
-git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-submodules
+git clone git@github.com:arjun7965/Route-Planner.git --recurse-submodules
 ```
-
-## Dependencies for Running Locally
-* cmake >= 3.11.3
-  * All OSes: [click here for installation instructions](https://cmake.org/install/)
-* make >= 4.1 (Linux, Mac), 3.81 (Windows)
-  * Linux: make is installed by default on most Linux distros
-  * Mac: [install Xcode command line tools to get make](https://developer.apple.com/xcode/features/)
-  * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
-* gcc/g++ >= 7.4.0
-  * Linux: gcc / g++ is installed by default on most Linux distros
-  * Mac: same instructions as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
-  * Windows: recommend using [MinGW](http://www.mingw.org/)
-* IO2D
-  * Installation instructions for all operating systems can be found [here](https://github.com/cpp-io2d/P0267_RefImpl/blob/master/BUILDING.md)
-  * This library must be built in a place where CMake `find_package` will be able to find it
 
 ## Compiling and Running
 
@@ -43,19 +26,40 @@ cmake ..
 make
 ```
 ### Running
-The executable will be placed in the `build` directory. From within `build`, you can run the project as follows:
+The executables will be placed in the `bin` directory. From within `build`, you can run the project as follows:
 ```
-./OSM_A_star_search
-```
-Or to specify a map file:
-```
-./OSM_A_star_search -f ../<your_osm_file.osm>
+../bin/<name-of-parent-directory> -f ../map.osm
 ```
 
 ## Testing
 
-The testing executable is also placed in the `build` directory. From within `build`, you can run the unit tests as follows:
+For exercises that have unit tests, the project must be built with the approprate test cpp file. This can be done by passing a string with the `-DTESTING` flag in `cmake`. For example, from the build directory:
 ```
-./test
+cmake -DTESTING="RouteModel" ..
+make
 ```
+Those commands will build the code with the tests for the "Fill Out Route Model" exercise. The tests can then be run from the `build` directory as follows:
+```
+../bin/test
+```
+Exercises with tests will specify which string to pass with `-DTESTING`, but a table is given below with the complete list for reference:
 
+| Exercise Name               | `-DTESTING` String Value |
+|-----------------------------|:------------------------:|
+| Fill Out Route Model        |       "RouteModel"       |
+| Fill Out Node Class         |       "RMNodeClass"      |
+| Create RouteModel Nodes     |        "RMSNodes"        |
+| Write the Distance Function |        "NodeDist"        |
+| Create Road to Node Hashmap |       "NodeToRoad"       |
+| Write FindNeighbors         |      "FindNeighbors"     |
+| Find the Closest Node       |       "FindClosest"      |
+| Write the A\* Search Stub   |        "AStarStub"       |
+| Finish A\* Search           |       "AStarSearch"      |
+
+
+### Output
+
+After you compile the program, you can run the executables which are in the `bin` directory. The executable requires path to the OpenStreetMap XML file which is placed in the project folder as `map.osm`. 
+
+You need to enter start and end coordinates within 0-100. A sample output:
+![alt text](https://github.com/arjun7965/Route-Planner/blob/master/images/Output.png)
