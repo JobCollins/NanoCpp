@@ -1,5 +1,6 @@
 //#include "Person.h"
 #include "Tweeter.h"
+#include "status.h"
 #include <iostream>
 
 using namespace std;
@@ -23,6 +24,14 @@ int main()
 	} //signifies end of the Tweeter scope
 
 	cout << "after innermost block" << endl;
+
+	//assign old enum
+	Status s = Pending;
+	s = Approved;
+
+	//assign scoped enum use fully qualified name
+	FileError fe = FileError::notfound;
+	fe = FileError::ok;
 	
 	return 0;
 }
