@@ -1,0 +1,2 @@
+C:\Users\intel\Desktop\stuff\NanoCpp\concepts\UserDefinedTypes\Debug\UserDefinedTypes.exe
+C:\Users\intel\Desktop\stuff\NanoCpp\concepts\UserDefinedTypes\Debug\UserDefinedTypes.pdb
