@@ -1,0 +1,2 @@
+C:\Users\intel\Desktop\stuff\NanoCpp\concepts\DemoConsoleApp\Debug\DemoConsoleApp.exe
+C:\Users\intel\Desktop\stuff\NanoCpp\concepts\DemoConsoleApp\Debug\DemoConsoleApp.pdb
